@@ -26,8 +26,9 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		chirpstore.CreateChirp(req.body);
-		res.send(200);
+		await chirpstore.CreateChirp(req.body);
+		res.status(200).json({ message: "Chirp created successfully!" });
+		res.send("Posted successfully");
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({ message: err.message });
@@ -38,8 +39,8 @@ router.put("/:id?", async (req, res) => {
 	try {
 		const id = req.params.id;
 		if (id) {
-			chirpstore.UpdateChirp(id, req.body);
-			res.send(200);
+			await chirpstore.UpdateChirp(id, req.body);
+			res.status(200).json({ message: "Chirp updated successfully!" });
 		} else {
 			res.send("No chirp found");
 		}
@@ -53,8 +54,8 @@ router.delete("/:id?", async (req, res) => {
 	try {
 		const id = req.params.id;
 		if (id) {
-			chirpstore.UpdateChirp(id, req.body);
-			res.send(204);
+			await chirpstore.UpdateChirp(id, req.body);
+			res.status(204).json({ message: "Chirp deleted successfully!" });
 		} else {
 			res.send("No chirp found");
 		}
